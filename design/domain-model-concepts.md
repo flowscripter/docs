@@ -45,7 +45,7 @@ A processing session might consist of:
 - a model based approach of defining a graph for reading from streams into a model, modifying the model and then 
 defining a graph to write out to streams.
 
-#### Session
+### Session
 
 A session is a handle to maintain state for the core runtime. 
 
@@ -56,7 +56,7 @@ telemetry, manage resources and connect to remote agent instances.
 
 A session allows partitioning of graph operators for assignment to particular resources.
 
-#### Graph
+### Graph
 
 A graph consists of a number of operator instances connected together via links.
 
@@ -66,7 +66,7 @@ A graph provides for callbacks when changes to the graph structure or operators 
 
 A sub-graph encapsulates a number of linked operators as a single operator allowing hierarchical definition of graphs. 
 
-#### Link
+### Link
 
 Links are used to connect output pins to input pins.
 
@@ -89,7 +89,7 @@ Link parameters, implementations, interceptors and decorators provide functional
 
 It is possible to globally configure interceptors for all links.
 
-#### Item
+### Item
 
 Items are the units of data passed from operators over links.
 
@@ -105,7 +105,7 @@ readonly, writable and whether their operator propagation rules.
  
 Punctuation attribute keys e.g. end of stream are dded by the core framework to the registry.
 
-#### Extensions
+### Extensions
 
 An extension to the core system is either a module or a command.
 
@@ -113,7 +113,7 @@ Most of the core t9r functionality is implemented via extensions to the core run
 
 t9r extensions can be discovered and installed using the CLI. 
 
-#### Modules
+### Modules
 
 Defined module types are:
 
@@ -131,7 +131,7 @@ A command wraps Javascript functionality in a function so that it can be simply 
 A commands consists of a name, a version, dependencies, Javascript and a definition of command line arguments and how these are mapped to arguments in 
 the Javascript logic.
 
-#### Operator 
+### Operators
 
 An operator is implemented in native code and exposed via a Javascript binding.
 
@@ -178,7 +178,7 @@ parallel paths and the resulting items of each processing path are gathered toge
 - split: split input items into smaller output items on separate pins e.g. demultiplexer
 - aggregate: combine multiple input items on separate pins into a single larger output item e.g. multiplexer
 
-#### Models
+### Models
 
 Models define explicit typed structure access to:
 
@@ -193,7 +193,7 @@ The registry is updated by modules when they provide implementations of:
 - payload types
 - item attribute keys
 
-#### Data Stores
+### Data Stores
 
 Data stores provide the ability to persist information for 'out of band' access.
 
@@ -233,7 +233,7 @@ Plugin framework for t9r modules defines extension points to implement:
 
 Payload types and models can extend the Javascript API.
 
-#### Resource
+### Resource
 
 The processing framework provides resource concepts for IO, memory and compute.
 
