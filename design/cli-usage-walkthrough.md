@@ -41,17 +41,17 @@ Core commands:
     help            Display this help message. Use 'help <command>' for detailed help.
     version         Display Tessellator version.
     self-update     Update Tessellator (including core commands and modules).
-    install         Install commands and modules.
-    search          Search commands and modules.
-    remove          Remove installed commands and modules.
-    versions        Display version information for installed commands and modules.
-    update          Update installed commands and modules.
+    install         Install command and extension plugins.
+    search          Search command and extension plugins.
+    remove          Remove installed command and extension plugins.
+    versions        Display version information for installed command and extension plugins.
+    update          Update installed command and extension plugins.
     script          Execute a script using Tessellator and display the result.
     repl            Start Tessellator in REPL interactive mode.
     agent           Start Tessellator in REST API agent mode.
     workbench       Start Tessellator in REST API agent mode and launch the workbench UI in a browser. 
 
-Core modules:
+Core extensions:
 
     file
 
@@ -59,7 +59,7 @@ Installed commands:
 
     None!
 	
-Installed modules:
+Installed extensions:
 
     None!
 ```
@@ -117,7 +117,7 @@ Installed commands:
 
     mxf-metadata-extract    Display metadata extracted from an MXF file.
 	
-Installed modules:
+Installed extensions:
 
     bmx                     MXF file functionality courtesy of BMXLib
     mxf-model               MXF file model
@@ -125,7 +125,8 @@ Installed modules:
 	
 ```
 
-The `mxf-metadata-extract-command` package is a t9r command plugin and makes use of the `bmx` and `mxf-model` modules.
+The `mxf-metadata-extract-command` package is a t9r command plugin and makes use of the `bmx` and `mxf-model` 
+extension plugins.
 
 
 Running:
@@ -176,7 +177,7 @@ A pre-existing script can be executed using:
 
 #### SDK Support
 
-To develop commands and modules or to manage 3rd party NodeJS packages, you need to install the Tessellator SDK:
+To develop command and extension plugins, you need to install the Tessellator SDK:
 
 `t9r install sdk`
 
@@ -200,24 +201,19 @@ Now when you run `t9r --help` the return includes:
 ```
 Installed commands:
 
-    scaffold      Create a new SDK project for a Tessellator command or module.
-    build         Build a Tessellator module which includes native code.
-    packages      Manage 3rd party NodeJS packages.
-    deploy        Publish a Tessellator command or module.
+    scaffold      Create a new SDK project for a Tessellator plugin.
+    build         Build a Tessellator plugin.
+    deploy        Publish a Tessellator plugin.
 
 ```
 
-The `packages` command lets you install, update and delete 3rd party NodeJS packages. They will be downloaded to 
-sub-folders in `~/.t9r/node_modules/`.
+##### npm and 3rd Party Packages
 
-Note that `packages` and `deploy` are wrappers around `npm` functionality. If you have `npm` installed and you configure 
-it (using `prefix`) and the Tessellator `settings.toml` file to use the same modules prefix, you can use `npm` instead
-for equivalent functionality.
+To build a plugin you will need `npm` installed.
 
-Private npmjs.com organisations can be used when using `npm` to manage Tessellator and 3rd party NodeJS packages.
+When you scaffold a new project it will include a `package.json` file and suitable build scripts to build
+ the Javascript plugin for usage in the NodeJS runtime or the browser runtime or both. It will also support building
+ native code as a NodeJS module or WASM module or both.
 
-If the current working directory contains a `packages.json` file, this will be used with the `packages` command
-similar to using `npm`.
-
-When a local `packages.json` file exists in the current folder, this package can be required within the REPL or a
-Tessellator script when running Tessellator from that folder.
+If you configure `npm` (using `prefix`) and the Tessellator `settings.toml` file to use 
+the same modules prefix, you can use `npm` to manage 3rd party packages you wish to import in your plugin.

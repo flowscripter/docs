@@ -4,15 +4,15 @@ A NodeJS based runtime provides Javascript based access to the t9r framework lib
 
 A core part of this API is a flow based processing model.
 
-Modules extend the API with additional processing operators, data models, data stores, payload types and item attributes.      
+Plugins extend the API with additional processing operators, data models, data stores, payload types and item attributes.      
 
 ### Runtime
 
-The core runtime is exposed via a Javascript API executed within a NodeJS process.
+The core runtime is exposed via a Javascript API executed within
 
-Usage is via a single binary executable CLI.
-
-The CLI also provides a REPL scripting environment and running in agent mode to expose a REST API. 
+- a NodeJS runtime where usage is via a single binary executable CLI. The CLI also provides a REPL scripting 
+environment and running in agent mode to expose a REST API.
+- a browser web worker and WASM based runtime where usage is via a workbench web app.
 
 ### Flow Based Processing
 
@@ -32,12 +32,13 @@ e.g. new flows added.
 At the core all media is read and written using streams, but with the usage of stream attributes e.g. seekable, it is 
 possible to expose efficient access if the underlying storage allows.
 
-Useful 3rd-party tools e.g. ffmpeg can be utilised via modules which explicitly wrap specific functionality as operators.
+Useful 3rd-party tools e.g. ffmpeg can be utilised via extension plugins which explicitly wrap specific functionality
+ as operators.
 
 Flow based processing logic can be performed:
-    - 'in loop': via internal operator logic or via operator exposed callbacks
-    - 'out of loop': via processing graph callbacks, dynamic changes to operator parameters and pre- or post-processing 
-    access to model data accessible to operators via data stores
+- *in loop*: via internal operator logic or via operator exposed callbacks
+- *out of loop*: via processing graph callbacks, dynamic changes to operator parameters and pre- or post-processing 
+access to model data accessible to operators via data stores
 
 A processing session might consist of:
 
@@ -94,9 +95,9 @@ It is possible to globally configure interceptors for all links.
 Items are the units of data passed from operators over links.
 
 An item consists of:
-- attributes: a key->object map
-- payload type: negotiated between operators
-- payload: a chunk of data of the specified payload type
+- *attributes*: a key->object map
+- *payload type*: negotiated between operators
+- *payload*: a chunk of data of the specified payload type
 
 Defined payload types are registered in the registry by modules.
 
@@ -105,31 +106,31 @@ readonly, writable and whether their operator propagation rules.
  
 Punctuation attribute keys e.g. end of stream are dded by the core framework to the registry.
 
-### Extensions
+### Plugins
 
-An extension to the core system is either a module or a command.
+A plugin to the core system is either an extension or a command.
 
 Most of the core t9r functionality is implemented via extensions to the core runtime.
 
-t9r extensions can be discovered and installed using the CLI. 
+t9r plugins can be discovered and installed using the CLI. 
 
-### Modules
+### Extensions
 
-Defined module types are:
+Defined extension types are:
 
-- operator
-- model
-- registry
-- data store
+- *operator*
+- *model*
+- *registry*
+- *data store*
   
-A module consists of a name, a version, dependencies, Javascript and optionally native code libraries.
+An extension consists of a name, a version, dependencies, Javascript and optionally native code libraries.
 
 ### Commands
 
 A command wraps Javascript functionality in a function so that it can be simply executed as a CLI command line argument. 
 
-A commands consists of a name, a version, dependencies, Javascript and a definition of command line arguments and how these are mapped to arguments in 
-the Javascript logic.
+A commands consists of a name, a version, dependencies, Javascript and a definition of command line arguments and 
+how these are mapped to arguments in the Javascript logic.
 
 ### Operators
 
@@ -137,58 +138,58 @@ An operator is implemented in native code and exposed via a Javascript binding.
 
 An operator is defined by:
 
-- properties: typed values which modify operator behaviour and can only be set before the operator is added to a graph 
-- parameters: typed values which modify operator behaviour and can be set while processing is occurring
-- pins:
-	- label: identifier for the pin
-	- type (producer, consumer): whether the pin produces or consumes items 
-	- supportedPayloadTypes: supported item payload types for this pin
-	- assignedPayloadType: item payload type assigned to the link connected to this pin
-	- mandatory: the pin must be linked
-	- static (1, n): a fixed number of these pins
-	- dynamic (added, removed, 0..*): an unknown, variable number of these pins
-	- requested (add, remove, 0..n): a variable, but fixed maximum number of these pins
-    - constraints: constraints defined between pins
+- *properties*: typed values which modify operator behaviour and can only be set before the operator is added to a graph 
+- *parameters*: typed values which modify operator behaviour and can be set while processing is occurring
+- *pins*:
+	- *label*: identifier for the pin
+	- *type* (producer, consumer): whether the pin produces or consumes items 
+	- *supportedPayloadTypes*: supported item payload types for this pin
+	- *assignedPayloadType*: item payload type assigned to the link connected to this pin
+	- *mandatory*: the pin must be linked
+	- *static* (1, n): a fixed number of these pins
+	- *dynamic* (added, removed, 0..*): an unknown, variable number of these pins
+	- *requested* (add, remove, 0..n): a variable, but fixed maximum number of these pins
+    - *constraints*: constraints defined between pins
     
 Example core operators:
 
-- producer: produce items 
-- consumer: consume items
-- transform: modify or consume and produce new items e.g. Attribute Filter, Attribute Enricher
-- route e.g. Payload Type Router, Attribute Router, Scripted Router
-- filter: only pass on certain items e.g. a scripted filter:
+- *produce*: produce items 
+- *consume*: consume items
+- *transform*: modify or consume and produce new items e.g. Attribute Filter, Attribute Enricher
+- *route*: e.g. Payload Type Router, Attribute Router, Scripted Router
+- *filter*: only pass on certain items e.g. a scripted filter:
     ```
     Filter(function (item) {
         return item.attributes["discard"] > 30;
     })
     ```
-- map: for each input item, map to a specific output value e.g. a scripted map operator:
+- *map*: for each input item, map to a specific output value e.g. a scripted map operator:
     ```
     Map(quote => quote.price)
     ```
-- batch: batch individual items into an array of items
-- sequence: split arrays of items into individual items
-- data store: read or write to a data store
-- adaptor: producer or consumer which can link with external sources and sinks of items e.g. webrtc, websockets  
-- scatter: input items on a single input pin are scattered (according to implemented logic) across multiple output pins
-- gather: input items on multiple input pins are gathered (according to implemented logic) and output on a single output pin
-- parallel (with scatter and gather): allows parallel processing - each input item is scattered across a number of 
+- *batch*: batch individual items into an array of items
+- *sequence*: split arrays of items into individual items
+- *data accessor*: read or write to a data store
+- *adapt*: producer or consumer which can link with external sources and sinks of items e.g. webrtc, websockets  
+- *scatter*: input items on a single input pin are scattered (according to implemented logic) across multiple output pins
+- *gather*: input items on multiple input pins are gathered (according to implemented logic) and output on a single output pin
+- *parallel* (with scatter and gather): allows parallel processing - each input item is scattered across a number of 
 parallel paths and the resulting items of each processing path are gathered together in correct order   
-- tee: output copies of the same input items onto multiple separate output pins
-- split: split input items into smaller output items on separate pins e.g. demultiplexer
-- aggregate: combine multiple input items on separate pins into a single larger output item e.g. multiplexer
+- *tee*: output copies of the same input items onto multiple separate output pins
+- *split*: split input items into smaller output items on separate pins e.g. demultiplexer
+- *aggregate*: combine multiple input items on separate pins into a single larger output item e.g. multiplexer
 
 ### Models
 
 Models define explicit typed structure access to:
 
-- item data e.g. packet structures for each specific payload type
-- physical and logical file data e.g. file formats and file content relationships 
-- metadata e.g. extracted semantic data  
+- *item data* e.g. packet structures for each specific payload type
+- *physical and logical file data* e.g. file formats and file content relationships 
+- *metadata* e.g. extracted semantic data  
   
 ### Registry
 
-The registry is updated by modules when they provide implementations of:
+The registry is updated by extensions when they provide implementations of:
 
 - payload types
 - item attribute keys
@@ -208,28 +209,28 @@ Implementations of data stores determine if the data:
 - persisted intermittently
 - remotely stored
 
-### Packages
+### Javascript Modules
 
-As the runtime is based on NodeJS, the underlying plugin and module system is based on npm support for packages. 
+As the runtime uses ES6 modules, plugins can make use of 3rd party Javascript modules. Support for importing these
+in the NodeJS runtime and browser runtime is transparent to the plugin implementer. 
 
-The CLI can be used to:
+The CLI is used to manage and use t9r plugins using t9r commands without any knowledge of NodeJS or npm.
 
-- manage and use t9r modules using t9r commands without any knowledge of NodeJS or npm.
-- manage t9r modules and 3rd party NodeJS packages with knowledge of npm.
+It is also used to scaffold, build and deploy t9r plugins.
 
-For NodeJS developers and t9r plugin framework users, standard NodeJS and npm can also be used to manage and use t9r 
-modules and 3rd party NodeJS packages.
+`npm` is used to manage 3rd party Javascript modules packages.
 
 ### Plugin Framework 
 
-Plugin framework for t9r modules defines extension points to implement:
+The plugin framework for t9r modules defines interfaces to implement:
 
 - commands
-- operators
-- models
-- payload types
-- data stores
-- attribute keys
+- extensions:
+    - operators
+    - data stores
+    - attribute keys
+    - models
+    - payload types
 
 Payload types and models can extend the Javascript API.
 
@@ -251,20 +252,7 @@ Raw logging and telemetry data can be written to various adaptors e.g. standard 
 
 ### Browser Integration
 
-When running the CLI in agent mode, the workbench browser UI can be used for integration.
-
-The interaction between the agent process and the browser is performed via:
-
-- the agent REST API
-- redirection of the REPL standard input and output over HTTP
-- sending logging and telemetry over websockets
-- intercepting data store updates and sending over websockets
-
-The workbench can be launched either by:
-
-- running the CLI with the workbench command which will launch a browser, load the workbench UI and connect to the local 
-instance
-- loading the workbench UI in a browser and specifying an existing agent instance to connect to 
+The workbench browser UI provides a graphical interface for experimentation.
 
 The workbench UI includes components for:
 
@@ -273,3 +261,23 @@ The workbench UI includes components for:
 - presenting operator parameters as UI forms
 - presenting runtime configuration as UI forms
 - structured rendering of data store contents
+
+Two runtimes are supported by the browser workbench:
+
+- The workbench can connect to an external agent process. In this case the interaction between the agent process and the 
+browser is performed via:
+    - the agent REST API
+    - redirection of the REPL standard input and output over HTTP
+    - sending logging and telemetry over websockets
+    - intercepting data store updates and sending over websockets
+- The workbench can launch an in-browser web worker and WASM runtime instance. In this case the interaction is direct between the 
+ workbench Javascript and the Javascript API exposed by the runtime. 
+
+The workbench can be launched either by:
+
+- running the CLI with the workbench command which will launch a browser, load the workbench UI and connect to the local 
+instance
+- loading the workbench UI in a browser and:
+    - specifying an existing agent instance to connect to or
+    - launching the in-browser WASM runtime. 
+
