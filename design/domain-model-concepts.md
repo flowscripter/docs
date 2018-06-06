@@ -1,6 +1,6 @@
 ### Scripting
 
-A NodeJS based runtime provides Javascript based access to the t9r framework library.
+A Javascript API exposes access to the t9r framework library.
 
 A core part of this API is a flow based processing model.
 
@@ -8,31 +8,31 @@ Plugins extend the API with additional processing operators, data models, data s
 
 ### Runtime
 
-The core runtime is exposed via a Javascript API executed within
+The core runtime is executed within:
 
-- a NodeJS runtime where usage is via a single binary executable CLI. The CLI also provides a REPL scripting 
-environment and running in agent mode to expose a REST API.
-- a browser web worker and WASM based runtime where usage is via a workbench web app.
+- A NodeJS runtime where usage is via a single binary executable CLI. The CLI provides a REPL scripting 
+environment and supports running in agent mode to expose a REST API.
+- A browser web worker and WASM based runtime where usage is via a workbench web app.
 
 ### Flow Based Processing
 
 The core runtime provides a generic flow based processing framework (as well as data stores, registries etc.) 
 
-It supports passing items of data of any payload type e.g. packet, frame between operators e.g. codecs over any kind of 
-link e.g. in process, shared memory, UDP.
+It supports passing items of data of any payload type (e.g. packet, frame) between operators (e.g. codecs) over any kind of 
+link (e.g. in process, shared memory, UDP).
  
-The flows of data between operators support concepts of live/real-time data, stream control items e.g. EOS and semantic 
-items e.g. machine vision results.
+The flows of data between operators support concepts of live/real-time data, stream control items (e.g. EOS) and semantic 
+items (e.g. machine vision results).
 
 The links between operators support operating with blocking, leaky or back-pressure semantics. 
 
-Processing graph supports callbacks to allow for flexible dynamic behaviour of processing as the data flows change 
-e.g. new flows added.
+The processing graph supports callbacks to allow for flexible dynamic behaviour of processing as the data flows change 
+(e.g. new flow added).
  
-At the core all media is read and written using streams, but with the usage of stream attributes e.g. seekable, it is 
+At the core, all items are read and written using streams, but with the usage of stream attributes (e.g. seekable), it is 
 possible to expose efficient access if the underlying storage allows.
 
-Useful 3rd-party tools e.g. ffmpeg can be utilised via extension plugins which explicitly wrap specific functionality
+Useful 3rd-party tools (e.g. ffmpeg) can be utilised via extension plugins which explicitly wrap specific functionality
  as operators.
 
 Flow based processing logic can be performed:
@@ -63,7 +63,7 @@ A graph consists of a number of operator instances connected together via links.
 
 When a graph is added to a session, there are restrictions applied as to what graph changes can be made.
 
-A graph provides for callbacks when changes to the graph structure or operators occur e.g. EOS, new pin
+A graph provides for callbacks when changes to the graph structure or operators occur (e.g. EOS, new pin).
 
 A sub-graph encapsulates a number of linked operators as a single operator allowing hierarchical definition of graphs. 
 
@@ -79,12 +79,9 @@ Links can operate either as:
     - leaky (leaky consumer or leaky producer) 
 - non-blocking back-pressure links if both the producer and consumer support reactive stream semantics.  
 
-- links have fixed size queues
-- can be blocking, leaky consumer, leaky producer, back-pressure
-
 Link parameters, implementations, interceptors and decorators provide functionality such as: 
 - wiretaps
-- automatic payload type conversion e.g. pixel format
+- automatic payload type conversion (e.g. pixel format)
 - item history (stored in item attributes)
 - telemetry instrumentation 
 
@@ -102,9 +99,9 @@ An item consists of:
 Defined payload types are registered in the registry by modules.
 
 Defined attribute keys are registered in the registry by modules. The registration includes whether the attributes are 
-readonly, writable and whether their operator propagation rules.
+readonly, writable and their operator propagation rules.
  
-Punctuation attribute keys e.g. end of stream are dded by the core framework to the registry.
+Punctuation attribute keys e.g. end of stream are added by the core framework to the registry.
 
 ### Plugins
 
@@ -129,7 +126,7 @@ An extension consists of a name, a version, dependencies, Javascript and optiona
 
 A command wraps Javascript functionality in a function so that it can be simply executed as a CLI command line argument. 
 
-A commands consists of a name, a version, dependencies, Javascript and a definition of command line arguments and 
+A command consists of a name, a version, dependencies, Javascript and a definition of command line arguments and 
 how these are mapped to arguments in the Javascript logic.
 
 ### Operators
@@ -281,3 +278,11 @@ instance
     - specifying an existing agent instance to connect to or
     - launching the in-browser WASM runtime. 
 
+### Native Code
+
+Extensions can include native code that can be written using Rust or C/C++ SDK bindings. 
+
+The native code is always compiled to WASM and can be used isomorphically on the server (NodeJS runtime) or the client (browser runtime).
+
+The core t9r library is developed with the same methodology.
+ 
