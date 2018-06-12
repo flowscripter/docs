@@ -1,6 +1,6 @@
 ### Scripting
 
-A Javascript API exposes access to the t9r framework library.
+A Javascript API exposes access to the f10r framework library.
 
 A core part of this API is a flow based processing model.
 
@@ -107,9 +107,9 @@ Punctuation attribute keys e.g. end of stream are added by the core framework to
 
 A plugin to the core system is either an extension or a command.
 
-Most of the core t9r functionality is implemented via extensions to the core runtime.
+Most of the core f10r functionality is implemented via extensions to the core runtime.
 
-t9r plugins can be discovered and installed using the CLI. 
+f10r plugins can be discovered and installed using the CLI. 
 
 ### Extensions
 
@@ -211,15 +211,15 @@ Implementations of data stores determine if the data:
 As the runtime uses ES6 modules, plugins can make use of 3rd party Javascript modules. Support for importing these
 in the NodeJS runtime and browser runtime is transparent to the plugin implementer. 
 
-The CLI is used to manage and use t9r plugins using t9r commands without any knowledge of NodeJS or npm.
+The CLI is used to manage and use f10r plugins using f10r commands without any knowledge of NodeJS or npm.
 
-It is also used to scaffold, build and deploy t9r plugins.
+It is also used to scaffold, build and deploy f10r plugins.
 
 `npm` is used to manage 3rd party Javascript modules packages.
 
 ### Plugin Framework 
 
-The plugin framework for t9r modules defines interfaces to implement:
+The plugin framework for f10r modules defines interfaces to implement:
 
 - commands
 - extensions:
@@ -284,5 +284,5 @@ Extensions can include native code that can be written using Rust or C/C++ SDK b
 
 The native code is always compiled to WASM and can be used isomorphically on the server (NodeJS runtime) or the client (browser runtime).
 
-The core t9r library is developed with the same methodology.
+The core f10r library is developed with the same methodology.
  

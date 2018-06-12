@@ -149,10 +149,10 @@ S3 => bmxlib => metadata output | workbench render
 use this:
 
 ```
-import { S3Reader } from '@t9r/s3';
-import { BmxExtractor } from '@t9r/bmx-extractor';
-import { MxfModel } from '@t9r/mxf-model';
-import { ModelStoreRecorder } from '@t9r/model';
+import { S3Reader } from '@f10r/s3';
+import { BmxExtractor } from '@f10r/bmx-extractor';
+import { MxfModel } from '@f10r/mxf-model';
+import { ModelStoreRecorder } from '@f10r/model';
 
 var s3Reader = new S3Reader(url: 's3://bucketname/filename.mxf);
 var bmxExtractor = new BmxExtractor();
@@ -178,12 +178,12 @@ File/URL => mp3 to wav => wav to text => timecoded script data points | workbenc
 use this:
 
 ```
-import { HttpReader } from '@t9r/http';
-import { Mp4Parser, Mp4Demuxer } from '@t9r/mp4';
-import { Mp3Parser } from '@t9r/mp3';
-import { AudioTranscoder } from '@t9r/audio';
-import { Transcripter, TranscriptModel } from '@t9r/audio-tools';
-import { ModelStoreRecorder } from '@t9r/model';
+import { HttpReader } from '@f10r/http';
+import { Mp4Parser, Mp4Demuxer } from '@f10r/mp4';
+import { Mp3Parser } from '@f10r/mp3';
+import { AudioTranscoder } from '@f10r/audio';
+import { Transcripter, TranscriptModel } from '@f10r/audio-tools';
+import { ModelStoreRecorder } from '@f10r/model';
 
 var httpReader = new HttpReader({url: 'http://partliament.org/media/test.mp4'});
 var mp4Parser = new Mp4Parser();

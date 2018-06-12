@@ -1,55 +1,55 @@
 ### Install
 
-Download and unzip from [https://tessellator.org/download](https://tessellator.org/download)
+Download and unzip from [https://flowscripter.org/download](https://flowscripter.org/download)
 
 ### First Run
 
 From a terminal:
 
-`t9r` 
+`f10r` 
 
 An initial prompt to share usage data will be displayed and a settings file will be created at:
 
-`~/.t9r/settings.toml`
+`~/.f10r/settings.toml`
 
 with the following contents:
 
 ```
 [cli]
-submit_usage_stats = true # anonymous submission of CLI usage to help improve Tessellator
+submit_usage_stats = true # anonymous submission of CLI usage to help improve Flowscripter
 
-[packages] # advanced(!) configuration for Tessellator wrapping of node npm functionality 
-prefix=~/.t9r/ # location of node_modules folder for packages downloaded by Tessellator
-scope=t9r # scope to use for Tessellator module packages
+[packages] # advanced(!) configuration for Flowscripter wrapping of node npm functionality 
+prefix=~/.f10r/ # location of node_modules folder for packages downloaded by Flowscripter
+scope=f10r # scope to use for Flowscripter module packages
 ```
 
 ### Basic Help
 
-`t9r --help` or `t9r`
+`f10r --help` or `f10r`
 
 which returns:
 
 ```
-Usage: t9r [<options>] <command> [<arguments>]
+Usage: f10r [<options>] <command> [<arguments>]
 
 Options:
 
-	--settings=<filepath>	Use settings from <filepath> (defaults to '~/.t9r/settings.toml').
+	--settings=<filepath>	Use settings from <filepath> (defaults to '~/.f10r/settings.toml').
 
 Core commands:
 
     help            Display this help message. Use 'help <command>' for detailed help.
-    version         Display Tessellator version.
-    self-update     Update Tessellator (including core commands and extensions).
+    version         Display Flowscripter version.
+    self-update     Update Flowscripter (including core commands and extensions).
     install         Install command and extension plugins.
     search          Search command and extension plugins.
     uninstall       Remove installed command and extension plugins.
     versions        Display version information for installed command and extension plugins.
     update          Update installed command and extension plugins.
-    script          Execute a script using Tessellator and display the result.
-    repl            Start Tessellator in REPL interactive mode.
-    agent           Start Tessellator in REST API agent mode.
-    workbench       Start Tessellator in REST API agent mode and launch the workbench UI in a browser. 
+    script          Execute a script using Flowscripter and display the result.
+    repl            Start Flowscripter in REPL interactive mode.
+    agent           Start Flowscripter in REST API agent mode.
+    workbench       Start Flowscripter in REST API agent mode and launch the workbench UI in a browser. 
 
 Core extensions:
 
@@ -67,88 +67,88 @@ Installed extensions:
 
 #### Basic Commands
 
-`t9r version`
+`f10r version`
 
 which returns:
 
 ```
-Tessellator v1.1.0
+Flowscripter v1.1.0
 
-Your version of Tessellator is out of date! The latest version is 1.2.1 
-You can update by downloading from t9r.org or on the command line via 't9r self-update'
+Your version of Flowscripter is out of date! The latest version is 1.2.1 
+You can update by downloading from f10r.org or on the command line via 'f10r self-update'
 ```
 
 Possibly followed by (for example):
 ```
-The following plugins are not compatible with the current version and will need to be updated via 't9r update':
+The following plugins are not compatible with the current version and will need to be updated via 'f10r update':
 
     mxf-model
 ```
 
-`t9r self-update`
+`f10r self-update`
 
 which returns:
 
 ```
-Tessellator v1.1.0 
+Flowscripter v1.1.0 
 
-Updated Tessellator to v1.2.1
+Updated Flowscripter to v1.2.1
 ```
 
 Possibly followed by (for example):
 ```
-The following plugins are not compatible with the current version and will need to be updated via 't9r update':
+The following plugins are not compatible with the current version and will need to be updated via 'f10r update':
 
     mxf-model
 ```
 
 #### Installing a Command
 
-`t9r install mxf-metadata-extract-command`
+`f10r install mxf-metadata-extract-command`
 
 which returns:
 
 ```
-@t9r/bmx@1.10.1
-@t9r/bmx-model@1.10.1
-@t9r/bmx-extractor@1.10.1
-@t9r/mxf-metadata-extract-command@1.10.1
+@f10r/bmx@1.10.1
+@f10r/bmx-model@1.10.1
+@f10r/bmx-extractor@1.10.1
+@f10r/mxf-metadata-extract-command@1.10.1
 ```
 
 and results in a new folder and module sub-folders:
 
 ```
-~/.t9r/node_modules/@t9r/bmx
-~/.t9r/node_modules/@t9r/mxf-model
-~/.t9r/node_modules/@t9r/bmx-extractor
-~/.t9r/node_modules/@t9r/mxf-metadata-extract-command
+~/.f10r/node_modules/@f10r/bmx
+~/.f10r/node_modules/@f10r/mxf-model
+~/.f10r/node_modules/@f10r/bmx-extractor
+~/.f10r/node_modules/@f10r/mxf-metadata-extract-command
 ```
 and possibly other 3rd party packages which are transitive dependencies of the above packages in sub-folders of:
 
-`~/.t9r/node_modules/`
+`~/.f10r/node_modules/`
 
-Now when you run `t9r --help -plugins` the return includes:
+Now when you run `f10r --help -plugins` the return includes:
 
 ```
 Installed commands:
 
-    @t9r/mxf-metadata-extract@1.10.1    Display metadata extracted from an MXF file.
+    @f10r/mxf-metadata-extract@1.10.1    Display metadata extracted from an MXF file.
 	
 Installed extensions:
 
-    @t9r/bmx@1.10.1                     MXF file functionality courtesy of BMXLib
-    @t9r/mxf-model@1.10.1               MXF file model
-    @t9r/bmx-extractor@1.10.1           MXF metadata extract operator using BMXLib
+    @f10r/bmx@1.10.1                     MXF file functionality courtesy of BMXLib
+    @f10r/mxf-model@1.10.1               MXF file model
+    @f10r/bmx-extractor@1.10.1           MXF metadata extract operator using BMXLib
 	
 ```
 
-The `mxf-metadata-extract-command` package is a Tessellator command plugin and makes use of the `bmx` and `mxf-model` 
+The `mxf-metadata-extract-command` package is a Flowscripter command plugin and makes use of the `bmx` and `mxf-model` 
 extension plugins.
 
 
 Running:
 
-`t9r help mxf-metadata-extract`
+`f10r help mxf-metadata-extract`
 
 returns:
 
@@ -159,7 +159,7 @@ Description:
 
 Usage:
 
-    t9r mxf-metadata-extract <arguments>
+    f10r mxf-metadata-extract <arguments>
 
 Arguments:
 
@@ -168,7 +168,7 @@ Arguments:
 
 #### REPL Example
 
-`t9r repl`
+`f10r repl`
 
 which returns:
 
@@ -179,17 +179,17 @@ which returns:
 A user can then interactively enter Javascript:
 
 ```
-import { BmxExtractor } from '@t9r/bmx-extractor';
+import { BmxExtractor } from '@f10r/bmx-extractor';
 ```
 
 Further Javascript logic will allow the user to achieve the same effect as using the wrapped command:
 
-`t9r mxf-metadata-extract -url=~/test.mxf`
+`f10r mxf-metadata-extract -url=~/test.mxf`
 
 A plugin can also be installed dynamically within the REPL:
 
 ```
-import { PluginManager } from '@t9r/plugin';
+import { PluginManager } from '@f10r/plugin';
 
 myTestPlugin = PluginManager.importPlugin('my-test-extension');
 
@@ -197,9 +197,9 @@ myTestPlugin = PluginManager.importPlugin('my-test-extension');
 
 The above will perform the equivalent of:
  
-`t9r install my-test-extension`
+`f10r install my-test-extension`
 
-Now when you run `t9r --help` the return includes:
+Now when you run `f10r --help` the return includes:
 
 ```
 Installed extensions:
@@ -211,37 +211,37 @@ Installed extensions:
 
 A pre-existing script can be executed using:
 
-`t9r script -file=script.js`
+`f10r script -file=script.js`
 
 #### SDK Support
 
-To develop command and extension plugins, you need to install the Tessellator SDK:
+To develop command and extension plugins, you need to install the Flowscripter SDK:
 
-`t9r install sdk`
+`f10r install sdk`
 
 which returns:
 
 ```
-@t9r/sdk@1.10.1
+@f10r/sdk@1.10.1
 ```
 
 and results in a new folder and module sub-folders:
 
 ```
-~/.t9r/node_modules/@t9r/sdk
+~/.f10r/node_modules/@f10r/sdk
 ```
 and possibly other 3rd party packages which are transitive dependencies of the above packages in sub-folders of:
 
-`~/.t9r/node_modules/`
+`~/.f10r/node_modules/`
 
-Now when you run `t9r --help` the return includes:
+Now when you run `f10r --help` the return includes:
 
 ```
 Installed commands:
 
-    scaffold      Create a new SDK project for a Tessellator plugin.
-    build         Build a Tessellator plugin.
-    deploy        Publish a Tessellator plugin.
+    scaffold      Create a new SDK project for a Flowscripter plugin.
+    build         Build a Flowscripter plugin.
+    deploy        Publish a Flowscripter plugin.
 
 ```
 
@@ -253,5 +253,5 @@ When you scaffold a new project it will include a `package.json` file and suitab
  the Javascript plugin for usage in the NodeJS and browser runtimes. It will also support building
  native code as a WASM module.
 
-If you configure `npm` (using `prefix`) and the Tessellator `settings.toml` file to use 
+If you configure `npm` (using `prefix`) and the Flowscripter `settings.toml` file to use 
 the same modules prefix, you can use `npm` to manage 3rd party packages you wish to import within your plugin.
