@@ -1,3 +1,3 @@
-# f10r-docs 
+# docs 
 Flowscripter Documentation
 
