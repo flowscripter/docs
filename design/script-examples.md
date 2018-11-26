@@ -143,16 +143,16 @@ var graph = new Graph(new Chain(new Parallel(new Source(), new Gather(), 3), new
 To achieve this functionality:
 
 ```
-S3 => bmxlib => metadata output | workbench render
+S3 => bmxlib => metadata output
 ```
 
 use this:
 
 ```
-import { S3Reader } from '@f10r/s3';
-import { BmxExtractor } from '@f10r/bmx-extractor';
-import { MxfModel } from '@f10r/mxf-model';
-import { ModelStoreRecorder } from '@f10r/model';
+import { S3Reader } from '@flowscripter/s3';
+import { BmxExtractor } from '@flowscripter/bmx-extractor';
+import { MxfModel } from '@flowscripter/mxf-model';
+import { ModelStoreRecorder } from '@flowscripter/model';
 
 var s3Reader = new S3Reader(url: 's3://bucketname/filename.mxf);
 var bmxExtractor = new BmxExtractor();
@@ -162,8 +162,6 @@ var graph = new Graph(s3Reader, bmxExtractor, storeRecorder);
 
 var session = new Session();
 session.resumeAndWaitForCompletion(graph);
-
-// To display in workbench, use a model datastore which pushes updates over websockets
 
 ```
 
@@ -178,12 +176,12 @@ File/URL => mp3 to wav => wav to text => timecoded script data points | workbenc
 use this:
 
 ```
-import { HttpReader } from '@f10r/http';
-import { Mp4Parser, Mp4Demuxer } from '@f10r/mp4';
-import { Mp3Parser } from '@f10r/mp3';
-import { AudioTranscoder } from '@f10r/audio';
-import { Transcripter, TranscriptModel } from '@f10r/audio-tools';
-import { ModelStoreRecorder } from '@f10r/model';
+import { HttpReader } from '@flowscripter/http';
+import { Mp4Parser, Mp4Demuxer } from '@flowscripter/mp4';
+import { Mp3Parser } from '@flowscripter/mp3';
+import { AudioTranscoder } from '@flowscripter/audio';
+import { Transcripter, TranscriptModel } from '@flowscripter/audio-tools';
+import { ModelStoreRecorder } from '@flowscripter/model';
 
 var httpReader = new HttpReader({url: 'http://partliament.org/media/test.mp4'});
 var mp4Parser = new Mp4Parser();
@@ -208,6 +206,4 @@ graph.onEvent(Symbol.for("newPin"), function newPin(event, session, graph, opera
 
 var session = new Session();
 session.resumeAndWaitForCompletion(graph);
-
-// To display in workbench, use a model datastore which pushes updates over websockets
 ```

@@ -6,11 +6,11 @@ Download and unzip from [https://flowscripter.org/download](https://flowscripter
 
 From a terminal:
 
-`f10r` 
+`flowscripter` 
 
 An initial prompt to share usage data will be displayed and a settings file will be created at:
 
-`~/.f10r/settings.toml`
+`~/.flowscripter/settings.toml`
 
 with the following contents:
 
@@ -19,22 +19,22 @@ with the following contents:
 submit_usage_stats = true # anonymous submission of CLI usage to help improve Flowscripter
 
 [packages] # advanced(!) configuration for Flowscripter wrapping of node npm functionality 
-prefix=~/.f10r/ # location of node_modules folder for packages downloaded by Flowscripter
-scope=f10r # scope to use for Flowscripter module packages
+prefix=~/.flowscripter/ # location of node_modules folder for packages downloaded by Flowscripter
+scope=flowscripter # scope to use for Flowscripter module packages
 ```
 
 ### Basic Help
 
-`f10r --help` or `f10r`
+`flowscripter --help` or `flowscripter`
 
 which returns:
 
 ```
-Usage: f10r [<options>] <command> [<arguments>]
+Usage: flowscripter [<options>] <command> [<arguments>]
 
 Options:
 
-	--settings=<filepath>	Use settings from <filepath> (defaults to '~/.f10r/settings.toml').
+	--settings=<filepath>	Use settings from <filepath> (defaults to '~/.flowscripter/settings.toml').
 
 Core commands:
 
@@ -48,8 +48,6 @@ Core commands:
     update          Update installed command and extension plugins.
     script          Execute a script using Flowscripter and display the result.
     repl            Start Flowscripter in REPL interactive mode.
-    agent           Start Flowscripter in REST API agent mode.
-    workbench       Start Flowscripter in REST API agent mode and launch the workbench UI in a browser. 
 
 Core extensions:
 
@@ -67,7 +65,7 @@ Installed extensions:
 
 #### Basic Commands
 
-`f10r version`
+`flowscripter version`
 
 which returns:
 
@@ -75,17 +73,17 @@ which returns:
 Flowscripter v1.1.0
 
 Your version of Flowscripter is out of date! The latest version is 1.2.1 
-You can update by downloading from f10r.org or on the command line via 'f10r self-update'
+You can update by downloading from flowscripter.org or on the command line via 'flowscripter self-update'
 ```
 
 Possibly followed by (for example):
 ```
-The following plugins are not compatible with the current version and will need to be updated via 'f10r update':
+The following plugins are not compatible with the current version and will need to be updated via 'flowscripter update':
 
     mxf-model
 ```
 
-`f10r self-update`
+`flowscripter self-update`
 
 which returns:
 
@@ -97,48 +95,48 @@ Updated Flowscripter to v1.2.1
 
 Possibly followed by (for example):
 ```
-The following plugins are not compatible with the current version and will need to be updated via 'f10r update':
+The following plugins are not compatible with the current version and will need to be updated via 'flowscripter update':
 
     mxf-model
 ```
 
 #### Installing a Command
 
-`f10r install mxf-metadata-extract-command`
+`flowscripter install mxf-metadata-extract-command`
 
 which returns:
 
 ```
-@f10r/bmx@1.10.1
-@f10r/bmx-model@1.10.1
-@f10r/bmx-extractor@1.10.1
-@f10r/mxf-metadata-extract-command@1.10.1
+@flowscripter/bmx@1.10.1
+@flowscripter/bmx-model@1.10.1
+@flowscripter/bmx-extractor@1.10.1
+@flowscripter/mxf-metadata-extract-command@1.10.1
 ```
 
 and results in a new folder and module sub-folders:
 
 ```
-~/.f10r/node_modules/@f10r/bmx
-~/.f10r/node_modules/@f10r/mxf-model
-~/.f10r/node_modules/@f10r/bmx-extractor
-~/.f10r/node_modules/@f10r/mxf-metadata-extract-command
+~/.flowscripter/node_modules/@flowscripter/bmx
+~/.flowscripter/node_modules/@flowscripter/mxf-model
+~/.flowscripter/node_modules/@flowscripter/bmx-extractor
+~/.flowscripter/node_modules/@flowscripter/mxf-metadata-extract-command
 ```
 and possibly other 3rd party packages which are transitive dependencies of the above packages in sub-folders of:
 
-`~/.f10r/node_modules/`
+`~/.flowscripter/node_modules/`
 
-Now when you run `f10r --help -plugins` the return includes:
+Now when you run `flowscripter --help -plugins` the return includes:
 
 ```
 Installed commands:
 
-    @f10r/mxf-metadata-extract@1.10.1    Display metadata extracted from an MXF file.
+    @flowscripter/mxf-metadata-extract@1.10.1    Display metadata extracted from an MXF file.
 	
 Installed extensions:
 
-    @f10r/bmx@1.10.1                     MXF file functionality courtesy of BMXLib
-    @f10r/mxf-model@1.10.1               MXF file model
-    @f10r/bmx-extractor@1.10.1           MXF metadata extract operator using BMXLib
+    @flowscripter/bmx@1.10.1                     MXF file functionality courtesy of BMXLib
+    @flowscripter/mxf-model@1.10.1               MXF file model
+    @flowscripter/bmx-extractor@1.10.1           MXF metadata extract operator using BMXLib
 	
 ```
 
@@ -148,7 +146,7 @@ extension plugins.
 
 Running:
 
-`f10r help mxf-metadata-extract`
+`flowscripter help mxf-metadata-extract`
 
 returns:
 
@@ -159,7 +157,7 @@ Description:
 
 Usage:
 
-    f10r mxf-metadata-extract <arguments>
+    flowscripter mxf-metadata-extract <arguments>
 
 Arguments:
 
@@ -168,7 +166,7 @@ Arguments:
 
 #### REPL Example
 
-`f10r repl`
+`flowscripter repl`
 
 which returns:
 
@@ -179,17 +177,17 @@ which returns:
 A user can then interactively enter Javascript:
 
 ```
-import { BmxExtractor } from '@f10r/bmx-extractor';
+import { BmxExtractor } from '@flowscripter/bmx-extractor';
 ```
 
 Further Javascript logic will allow the user to achieve the same effect as using the wrapped command:
 
-`f10r mxf-metadata-extract -url=~/test.mxf`
+`flowscripter mxf-metadata-extract -url=~/test.mxf`
 
 A plugin can also be installed dynamically within the REPL:
 
 ```
-import { PluginManager } from '@f10r/plugin';
+import { PluginManager } from '@flowscripter/plugin';
 
 myTestPlugin = PluginManager.importPlugin('my-test-extension');
 
@@ -197,9 +195,9 @@ myTestPlugin = PluginManager.importPlugin('my-test-extension');
 
 The above will perform the equivalent of:
  
-`f10r install my-test-extension`
+`flowscripter install my-test-extension`
 
-Now when you run `f10r --help` the return includes:
+Now when you run `flowscripter --help` the return includes:
 
 ```
 Installed extensions:
@@ -211,30 +209,30 @@ Installed extensions:
 
 A pre-existing script can be executed using:
 
-`f10r script -file=script.js`
+`flowscripter script -file=script.js`
 
 #### SDK Support
 
 To develop command and extension plugins, you need to install the Flowscripter SDK:
 
-`f10r install sdk`
+`flowscripter install sdk`
 
 which returns:
 
 ```
-@f10r/sdk@1.10.1
+@flowscripter/sdk@1.10.1
 ```
 
 and results in a new folder and module sub-folders:
 
 ```
-~/.f10r/node_modules/@f10r/sdk
+~/.flowscripter/node_modules/@flowscripter/sdk
 ```
 and possibly other 3rd party packages which are transitive dependencies of the above packages in sub-folders of:
 
-`~/.f10r/node_modules/`
+`~/.flowscripter/node_modules/`
 
-Now when you run `f10r --help` the return includes:
+Now when you run `flowscripter --help` the return includes:
 
 ```
 Installed commands:
@@ -250,8 +248,7 @@ Installed commands:
 To build a plugin you will need `npm` installed.
 
 When you scaffold a new project it will include a `package.json` file and suitable build scripts to build
- the Javascript plugin for usage in the NodeJS and browser runtimes. It will also support building
- native code as a WASM module.
+ the Javascript plugin for usage in the NodeJS runtime.
 
 If you configure `npm` (using `prefix`) and the Flowscripter `settings.toml` file to use 
 the same modules prefix, you can use `npm` to manage 3rd party packages you wish to import within your plugin.
