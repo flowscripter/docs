@@ -1,24 +1,24 @@
 ### Scripting
 
-A Javascript API exposes access to the Flowscripter framework library.
+A Javascript API exposes access to the Flowscripter runtime.
 
 A core part of this API is a flow based processing model.
 
 Plugins extend the API with additional processing operators, data models, data stores, payload types and item attribute keys.      
 
-### Runtime
+### CLI
 
 The core processing is executed within a NodeJS runtime where usage is via a single binary executable CLI. 
 The CLI provides a REPL scripting environment.
 
-### Flow Based Processing
+### Flow Based Runtime
 
 The core runtime provides a generic flow based processing framework (as well as data stores, registry etc.) 
 
 It supports passing items of data of any payload type (e.g. packet, frame) between operators (e.g. codecs) over any kind of 
 link (e.g. in process, shared memory, UDP).
 
-The flows of data between operators support concepts of stream control items (e.g. EOS) and semantic 
+As well as 'essence' data, the flows between operators support concepts of stream control items (e.g. EOS) and semantic 
 items (e.g. machine vision results).
 
 The links between operators support blocking, leaky or back-pressure semantics. 
@@ -26,21 +26,21 @@ The links between operators support blocking, leaky or back-pressure semantics.
 The processing graph supports callbacks to allow for flexible dynamic behaviour of processing as the data flows change 
 (e.g. new flow added).
  
-At the core, all items are read and written using streams, but with the usage of stream attributes (e.g. seekable), it is 
-possible to expose efficient access if the underlying storage allows.
+At the core, all items are accessing using readable and writable streams, but with the usage of stream attributes
+(e.g. seekable), it is possible to expose efficient access if the underlying storage allows.
 
 Useful 3rd-party tools (e.g. ffmpeg) can be utilised via extension plugins which explicitly wrap specific functionality
  as operators.
 
-Flow based processing logic can be performed:
-- *in loop*: via internal operator logic or via operator exposed callbacks
-- *out of loop*: via processing graph callbacks, dynamic changes to operator parameters and pre- or post-processing 
-access to model data accessible to operators via data stores
+Logic can be performed:
+- *in loop*: i.e. within the execution of the processing graph via internal operator logic or via operator exposed callbacks.
+- *out of loop*: i.e. outside the execution of the processing graph via graph callbacks, dynamic changes to operator parameters and pre- or post-processing 
+access to model data (which is accessible to operators via data stores).
 
 A processing session can consist of either a:
 
-- *stream based approach*: defining a graph for performing in-loop processing to read, modify and write out streams.
-- *model based approach*: defining a graph for reading from streams into a model, modifying the model and then 
+- *stream based approach*: defining a graph for performing *in-loop* processing to read, modify and write out streams.
+- *model based approach*: defining a graph for reading from streams into a model, modifying the model *out of loop* and then 
 defining a graph to write out to streams.
 
 ### Session
@@ -58,7 +58,7 @@ A session allows partitioning of graph operators for assignment to particular re
 
 A graph consists of a number of operators connected together via links.
 
-When a graph is added to a session, there are restrictions applied as to what graph changes can be made.
+When a graph is added to a session, there are restrictions applied as to what changes can then be made to the graph.
 
 A graph provides for callbacks when changes to the graph structure or operators occur (e.g. EOS, new pin).
 
@@ -111,31 +111,31 @@ The plugin framework for Flowscripter provides the ability to implement plugins 
  
 Flowscripter plugins can be discovered and installed using the CLI. 
 
+### Commands
+
+A command wraps Javascript functionality in a function so that it can be simply executed as a CLI command line argument. 
+
+A command consists of a name, a version, dependencies on other plugins, Javascript and a definition of command line arguments and 
+how these are mapped to arguments in the Javascript logic.
+
 ### Extensions
 
 Defined extension types are:
 
 - *operator*
 - *data model*
+- *data store*
 - *registry*
-- *datastore*
 - *payload type*
 - *attribute key*
   
-An extension consists of a name, a version, dependencies, Javascript and optionally native code libraries.
+An extension consists of a name, a version, dependencies on other plugins, Javascript and optionally native code libraries.
 
 Payload types and data models can extend the Javascript API.
 
 Most of the core Flowscripter functionality is implemented via extensions to the core runtime.
 
-### Commands
-
-A command wraps Javascript functionality in a function so that it can be simply executed as a CLI command line argument. 
-
-A command consists of a name, a version, dependencies, Javascript and a definition of command line arguments and 
-how these are mapped to arguments in the Javascript logic.
-
-### Operators
+##### Operators
 
 An operator is implemented in native code and exposed via a Javascript binding.
 
@@ -180,8 +180,9 @@ parallel paths and the resulting items of each processing path are gathered toge
 - *tee*: output copies of the same input items onto multiple separate output pins
 - *split*: split input items into smaller output items on separate pins e.g. demultiplexer
 - *aggregate*: combine multiple input items on separate pins into a single larger output item e.g. multiplexer
+- *adapt*: producer or consumer which can link with external sources and sinks of items e.g. webrtc, websockets  
 
-### Data Models
+##### Data Models
 
 Data models define explicit typed structure access to:
 
@@ -189,7 +190,7 @@ Data models define explicit typed structure access to:
 - *physical and logical file data* e.g. file formats and file content relationships 
 - *metadata* e.g. extracted semantic data  
 
-### Data Stores
+##### Data Stores
 
 Data stores provide the ability to persist information for *out of loop* access.
 
@@ -204,7 +205,7 @@ Implementations of data stores determine if the data is:
 - persisted intermittently
 - remotely stored
   
-### Registry
+##### Registry
 
 The registry is updated by extensions when they provide implementations of:
 

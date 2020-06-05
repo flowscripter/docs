@@ -10,7 +10,7 @@ From a terminal:
 
 An initial prompt to share usage data will be displayed and a settings file will be created at:
 
-`~/.flowscripter/settings.toml`
+`~/.flowscripter/settings.yaml`
 
 with the following contents:
 
@@ -19,8 +19,8 @@ with the following contents:
 submit_usage_stats = true # anonymous submission of CLI usage to help improve Flowscripter
 
 [packages] # advanced(!) configuration for Flowscripter wrapping of node npm functionality 
-prefix=~/.flowscripter/ # location of node_modules folder for packages downloaded by Flowscripter
-scope=flowscripter # scope to use for Flowscripter module packages
+prefix=~/.flowscripter/node_modules # location of node_modules folder for packages downloaded by Flowscripter
+scope=@flowscripter # scope to use for Flowscripter plugin packages
 ```
 
 ### Basic Help
@@ -70,7 +70,7 @@ Installed extensions:
 which returns:
 
 ```
-Flowscripter v1.1.0
+1.1.0
 
 Your version of Flowscripter is out of date! The latest version is 1.2.1 
 You can update by downloading from flowscripter.org or on the command line via 'flowscripter self-update'
@@ -88,8 +88,6 @@ The following plugins are not compatible with the current version and will need 
 which returns:
 
 ```
-Flowscripter v1.1.0 
-
 Updated Flowscripter to v1.2.1
 ```
 
@@ -121,11 +119,8 @@ and results in a new folder and module sub-folders:
 ~/.flowscripter/node_modules/@flowscripter/bmx-extractor
 ~/.flowscripter/node_modules/@flowscripter/mxf-metadata-extract-command
 ```
-and possibly other 3rd party packages which are transitive dependencies of the above packages in sub-folders of:
 
-`~/.flowscripter/node_modules/`
-
-Now when you run `flowscripter --help -plugins` the return includes:
+Now when you run `flowscripter --help` the return includes:
 
 ```
 Installed commands:
@@ -228,9 +223,6 @@ and results in a new folder and module sub-folders:
 ```
 ~/.flowscripter/node_modules/@flowscripter/sdk
 ```
-and possibly other 3rd party packages which are transitive dependencies of the above packages in sub-folders of:
-
-`~/.flowscripter/node_modules/`
 
 Now when you run `flowscripter --help` the return includes:
 
@@ -240,7 +232,6 @@ Installed commands:
     scaffold      Create a new SDK project for a Flowscripter plugin.
     build         Build a Flowscripter plugin.
     deploy        Publish a Flowscripter plugin.
-
 ```
 
 ##### npm and 3rd Party Packages
@@ -250,5 +241,5 @@ To build a plugin you will need `npm` installed.
 When you scaffold a new project it will include a `package.json` file and suitable build scripts to build
  the Javascript plugin for usage in the NodeJS runtime.
 
-If you configure `npm` (using `prefix`) and the Flowscripter `settings.toml` file to use 
+If you configure `npm` (using `prefix`) and the Flowscripter `settings.yaml` file to use 
 the same modules prefix, you can use `npm` to manage 3rd party packages you wish to import within your plugin.

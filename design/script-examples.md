@@ -3,7 +3,7 @@
 ```
 var payloadType1 = new BinaryDataChunkPayloadType();
 var payloadType2 = new Mpeg2TransportStreamPacketPayloadType();
-var payloadType3 = new Mpeg2ElementaryStreamPacketPayloadType
+var payloadType3 = new Mpeg2ElementaryStreamPacketPayloadType();
 var payloadType4 = new JsonPayloadType();
 
 var link1 = new Link(payloadType1)
