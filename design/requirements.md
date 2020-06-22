@@ -4,10 +4,10 @@
 - Scripting guide
 - Developer guide: 
     - embedding (e.g. using the Lib API)
-    - feature development via commands and extensions (e.g. using the Extension API)
+    - feature development via commands and components (e.g. using the Component API)
 - Lib API generated documentation and sample code
-- Extension API generated documentation and sample code
-- Extension documentation e.g. implemented operators, models etc.
+- Component API generated documentation and sample code
+- Component documentation e.g. implemented operators, models etc.
 - Codebase generated documentation
 - Build instructions and design overview
 
@@ -16,13 +16,13 @@
 - Simple download and run
 - Pretty coloured text
 - Initial prompt to opt-in for usage reporting
-- Plugin (command, extension) discovery and installation at runtime
+- Plugin (command, component) discovery and installation at runtime
 - Core built-in commands:
 	- update and self-update
 	- agent mode
 	- REPL
 	- plugin management
-- Core built-in extensions: operators for parallel and scriptable router
+- No core built-in components
 
 #### REPL
 - Launched from CLI
@@ -37,11 +37,11 @@
 #### Embeddable Library
 - Cross platform library
 - Javascript API
-- Extension plugins can be installed and loaded
+- Component plugins can be installed and loaded
 
 #### Extensible
-- Plugins for Commands and Extensions
-- Extension types such as operators, payload types, scripting objects, events and models
+- Plugins for Commands and Components
+- Component types such as operators, payload types, scripting objects, events and models
 - Plugin lifecycle management via CLI e.g. scaffold, build, install, update, deploy
 - Support for local/remote plugin repositories
 - Plugin SDK for Rust and C++

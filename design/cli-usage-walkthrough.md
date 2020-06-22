@@ -40,16 +40,16 @@ Core commands:
 
     help            Display this help message. Use 'help <command>' for detailed help.
     version         Display Flowscripter version.
-    self-update     Update Flowscripter (including core commands and extensions).
-    install         Install command and extension plugins.
-    search          Search command and extension plugins.
-    uninstall       Remove installed command and extension plugins.
-    versions        Display version information for installed command and extension plugins.
-    update          Update installed command and extension plugins.
+    self-update     Update Flowscripter.
+    install         Install command and component plugins.
+    search          Search command and component plugins.
+    uninstall       Remove installed command and component plugins.
+    versions        Display version information for installed command and component plugins.
+    update          Update installed command and component plugins.
     script          Execute a script using Flowscripter and display the result.
     repl            Start Flowscripter in REPL interactive mode.
 
-Core extensions:
+Core components:
 
     file
     plugin
@@ -58,7 +58,7 @@ Installed commands:
 
     None!
 	
-Installed extensions:
+Installed components:
 
     None!
 ```
@@ -127,7 +127,7 @@ Installed commands:
 
     @flowscripter/mxf-metadata-extract@1.10.1    Display metadata extracted from an MXF file.
 	
-Installed extensions:
+Installed components:
 
     @flowscripter/bmx@1.10.1                     MXF file functionality courtesy of BMXLib
     @flowscripter/mxf-model@1.10.1               MXF file model
@@ -136,7 +136,7 @@ Installed extensions:
 ```
 
 The `mxf-metadata-extract-command` package is a Flowscripter command plugin and makes use of the `bmx` and `mxf-model` 
-extension plugins.
+component plugins.
 
 
 Running:
@@ -184,20 +184,20 @@ A plugin can also be installed dynamically within the REPL:
 ```
 import { PluginManager } from '@flowscripter/plugin';
 
-myTestPlugin = PluginManager.importPlugin('my-test-extension');
+myTestPlugin = PluginManager.importPlugin('my-test-component');
 
 ```
 
 The above will perform the equivalent of:
  
-`flowscripter install my-test-extension`
+`flowscripter install my-test-component`
 
 Now when you run `flowscripter --help` the return includes:
 
 ```
-Installed extensions:
+Installed components:
 
-    my-test-extension          My test extension
+    my-test-component          My test component
 ```
 
 #### Script Example
@@ -208,7 +208,7 @@ A pre-existing script can be executed using:
 
 #### SDK Support
 
-To develop command and extension plugins, you need to install the Flowscripter SDK:
+To develop command and component plugins, you need to install the Flowscripter SDK:
 
 `flowscripter install sdk`
 

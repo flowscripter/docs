@@ -29,7 +29,7 @@ The processing graph supports callbacks to allow for flexible dynamic behaviour 
 At the core, all items are accessing using readable and writable streams, but with the usage of stream attributes
 (e.g. seekable), it is possible to expose efficient access if the underlying storage allows.
 
-Useful 3rd-party tools (e.g. ffmpeg) can be utilised via extension plugins which explicitly wrap specific functionality
+Useful 3rd-party tools (e.g. ffmpeg) can be utilised via component plugins which explicitly wrap specific functionality
  as operators.
 
 Logic can be performed:
@@ -96,16 +96,16 @@ An item consists of:
 - *payload type*: negotiated between operators
 - *payload*: a chunk of data of the specified payload type
 
-Defined payload types are registered in the registry by extensions.
+Defined payload types are registered in the registry by components.
 
-Defined item attribute keys are registered in the registry by extensions. The registration includes whether the attributes are 
+Defined item attribute keys are registered in the registry by components. The registration includes whether the attributes are 
 readonly, writable and their operator propagation rules.
  
 Punctuation attribute keys e.g. EOS are added by the core framework to the registry.
 
 ### Plugin Framework 
 
-A plugin to the core system is either an extension or a command.
+A plugin to the core system is either a component or a command.
 
 The plugin framework for Flowscripter provides the ability to implement plugins as JavaScript modules.
  
@@ -118,9 +118,9 @@ A command wraps Javascript functionality in a function so that it can be simply 
 A command consists of a name, a version, dependencies on other plugins, Javascript and a definition of command line arguments and 
 how these are mapped to arguments in the Javascript logic.
 
-### Extensions
+### Components
 
-Defined extension types are:
+Defined component types are:
 
 - *operator*
 - *data model*
@@ -129,11 +129,11 @@ Defined extension types are:
 - *payload type*
 - *attribute key*
   
-An extension consists of a name, a version, dependencies on other plugins, Javascript and optionally native code libraries.
+A component consists of a name, a version, dependencies on other plugins, Javascript and optionally native code libraries.
 
 Payload types and data models can extend the Javascript API.
 
-Most of the core Flowscripter functionality is implemented via extensions to the core runtime.
+Most of the core Flowscripter functionality is implemented via components which extend the core runtime.
 
 ##### Operators
 
@@ -207,7 +207,7 @@ Implementations of data stores determine if the data is:
   
 ##### Registry
 
-The registry is updated by extensions when they provide implementations of:
+The registry is updated by components when they provide implementations of:
 
 - payload types
 - item attribute keys
@@ -228,7 +228,7 @@ It is also used to scaffold, build and deploy Flowscripter plugins.
 
 ### Native Code
 
-Extension plugins can include native code that can be written using Rust or C/C++ SDK bindings. 
+Component plugins can include native code that can be written using Rust or C/C++ SDK bindings. 
 
 The core Flowscripter library is developed with the same methodology.
  
