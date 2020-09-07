@@ -4,7 +4,7 @@ A Javascript API exposes access to the Flowscripter runtime.
 
 A core part of this API is a flow based processing model.
 
-Plugins extend the API with additional processing operators, data models, data stores, payload types and item attribute keys.      
+Plugins extend the API with additional processing operators, data models, datastores, payload types and item attribute keys.      
 
 ### CLI
 
@@ -13,7 +13,7 @@ The CLI provides a REPL scripting environment.
 
 ### Flow Based Runtime
 
-The core runtime provides a generic flow based processing framework (as well as data stores, registry etc.) 
+The core runtime provides a generic flow based processing framework (as well as datastores, registry etc.) 
 
 It supports passing items of data of any payload type (e.g. packet, frame) between operators (e.g. codecs) over any kind of 
 link (e.g. in process, shared memory, UDP).
@@ -35,7 +35,7 @@ Useful 3rd-party tools (e.g. ffmpeg) can be utilised via component plugins which
 Logic can be performed:
 - *in loop*: i.e. within the execution of the processing graph via internal operator logic or via operator exposed callbacks.
 - *out of loop*: i.e. outside the execution of the processing graph via graph callbacks, dynamic changes to operator parameters and pre- or post-processing 
-access to model data (which is accessible to operators via data stores).
+access to model data (which is accessible to operators via datastores).
 
 A processing session can consist of either a:
 
@@ -49,7 +49,7 @@ A session is a handle to maintain state for the core runtime.
 
 It allows graphs to be defined and models to be stored.
 
-Session parameters, implementations and decorators provide the ability to use different data store backends, capture 
+Session parameters, implementations and decorators provide the ability to use different datastore backends, capture 
 telemetry and manage resources.
 
 A session allows partitioning of graph operators for assignment to particular resources.
@@ -124,7 +124,7 @@ Defined component types are:
 
 - *operator*
 - *data model*
-- *data store*
+- *datastore*
 - *registry*
 - *payload type*
 - *attribute key*
@@ -172,7 +172,7 @@ Example core operators:
     ```
 - *batch*: batch individual items into an array of items
 - *sequence*: split arrays of items into individual items
-- *data accessor*: read or write to a data store
+- *data accessor*: read or write to a datastore
 - *scatter*: input items on a single input pin are scattered (according to implemented logic) across multiple output pins
 - *gather*: input items on multiple input pins are gathered (according to implemented logic) and output on a single output pin
 - *parallel* (with scatter and gather): allows parallel processing - each input item is scattered across a number of 
@@ -190,16 +190,16 @@ Data models define explicit typed structure access to:
 - *physical and logical file data* e.g. file formats and file content relationships 
 - *metadata* e.g. extracted semantic data  
 
-##### Data Stores
+##### Datastores
 
-Data stores provide the ability to persist information for *out of loop* access.
+Datastores provide the ability to persist information for *out of loop* access.
 
-Data stores can be used to store:
+Datastores can be used to store:
 
 - model instances
 - explicitly saved item attributes and payloads (a data model defines these as a model entry)
 
-Implementations of data stores determine if the data is:
+Implementations of datastores determine if the data is:
 
 - maintained in memory
 - persisted intermittently
@@ -213,7 +213,7 @@ The registry is updated by components when they provide implementations of:
 - item attribute keys
 - operators
 - data models
-- data stores
+- datastores
 
 ### Javascript Modules
 
@@ -246,4 +246,4 @@ Telemetry is recorded at various levels of granularity for three purposes:
 - analysis and diagnosis of session processing by users
 - anonymous summary usage data to understand usage and inform future roadmap decisions
 
-Raw logging and telemetry data can be written to various adaptors e.g. standard out, remote data store, websockets.
+Raw logging and telemetry data can be written to various adaptors e.g. standard out, remote datastore, websockets.
