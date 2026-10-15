@@ -1,5 +1,7 @@
 ### Scripting
 
+**Status: Planned**
+
 A Javascript API exposes access to the Flowscripter runtime.
 
 A core part of this API is a flow based processing model.
@@ -8,10 +10,14 @@ Plugins extend the API with additional processing operators, data models, datast
 
 ### CLI
 
+**Status: Planned**
+
 The core processing is executed within a NodeJS runtime where usage is via a single binary executable CLI. 
 The CLI provides a REPL scripting environment.
 
 ### Flow Based Runtime
+
+**Status: Planned**
 
 The core runtime provides a generic flow based processing framework (as well as datastores, registry etc.) 
 
@@ -45,6 +51,8 @@ defining a graph to write out to streams.
 
 ### Session
 
+**Status: Planned**
+
 A session is a handle to maintain state for the core runtime. 
 
 It allows graphs to be defined and models to be stored.
@@ -56,6 +64,8 @@ A session allows partitioning of graph operators for assignment to particular re
 
 ### Graph
 
+**Status: Planned**
+
 A graph consists of a number of operators connected together via links.
 
 When a graph is added to a session, there are restrictions applied as to what changes can then be made to the graph.
@@ -65,6 +75,8 @@ A graph provides for callbacks when changes to the graph structure or operators 
 A sub-graph encapsulates a number of linked operators as a single operator allowing hierarchical definition of graphs. 
 
 ### Link
+
+**Status: Planned**
 
 Links are used to connect output pins to input pins.
 
@@ -88,6 +100,8 @@ It is possible to globally configure interceptors for all links.
 
 ### Item
 
+**Status: Planned**
+
 Items are the units of data passed from operators over links.
 
 An item consists of:
@@ -105,6 +119,8 @@ Punctuation attribute keys e.g. EOS are added by the core framework to the regis
 
 ### Plugin Framework 
 
+**Status: Planned**
+
 A plugin to the core system is either a component or a command.
 
 The plugin framework for Flowscripter provides the ability to implement plugins as JavaScript modules.
@@ -113,12 +129,16 @@ Flowscripter plugins can be discovered and installed using the CLI.
 
 ### Commands
 
+**Status: Planned**
+
 A command wraps Javascript functionality in a function so that it can be simply executed as a CLI command line argument. 
 
 A command consists of a name, a version, dependencies on other plugins, Javascript and a definition of command line arguments and 
 how these are mapped to arguments in the Javascript logic.
 
 ### Components
+
+**Status: Planned**
 
 Defined component types are:
 
@@ -136,6 +156,8 @@ Payload types and data models can extend the Javascript API.
 Most of the core Flowscripter functionality is implemented via components which extend the core runtime.
 
 ##### Operators
+
+**Status: Planned**
 
 An operator is implemented in native code and exposed via a Javascript binding.
 
@@ -184,6 +206,8 @@ parallel paths and the resulting items of each processing path are gathered toge
 
 ##### Data Models
 
+**Status: Planned**
+
 Data models define explicit typed structure access to:
 
 - *item data* e.g. packet structures for each specific payload type
@@ -191,6 +215,8 @@ Data models define explicit typed structure access to:
 - *metadata* e.g. extracted semantic data  
 
 ##### Datastores
+
+**Status: Planned**
 
 Datastores provide the ability to persist information for *out of loop* access.
 
@@ -207,6 +233,8 @@ Implementations of datastores determine if the data is:
   
 ##### Registry
 
+**Status: Planned**
+
 The registry is updated by components when they provide implementations of:
 
 - payload types
@@ -216,6 +244,8 @@ The registry is updated by components when they provide implementations of:
 - datastores
 
 ### Javascript Modules
+
+**Status: Planned**
 
 As the runtime uses ES6 modules, command plugins can make use of 3rd party Javascript modules. Support for importing these
 in the NodeJS runtime is transparent to the plugin implementer. 
@@ -228,17 +258,23 @@ It is also used to scaffold, build and deploy Flowscripter plugins.
 
 ### Native Code
 
+**Status: Planned**
+
 Component plugins can include native code that can be written using Rust or C/C++ SDK bindings. 
 
 The core Flowscripter library is developed with the same methodology.
  
 ### Resource
 
+**Status: Planned**
+
 The processing framework provides resource concepts for IO, memory and compute.
 
 Allocation of resources to operators in graphs is handled via a session.
 
 ### Logging and Telemetry
+
+**Status: Planned**
 
 Telemetry is recorded at various levels of granularity for three purposes:
 
@@ -247,3 +283,99 @@ Telemetry is recorded at various levels of granularity for three purposes:
 - anonymous summary usage data to understand usage and inform future roadmap decisions
 
 Raw logging and telemetry data can be written to various adaptors e.g. standard out, remote datastore, websockets.
+
+### Component Model
+
+**Status: Planned**
+
+```mermaid
+flowchart LR
+    subgraph CLI
+        REPL
+        CLIConfig[Configuration]
+        subgraph CmdExt[Command Extensions]
+            JSLibs[Javascript 3rd Party Libraries]
+        end
+        ArgMap[Argument Mappings]
+        CmdExt --- ArgMap
+    end
+    App[3rd Party Javascript App]
+    API((API))
+    subgraph Lib
+        subgraph RT[Javascript and Rust Runtime]
+            GraphEngine[Graph Engine]
+            DataStores[Data Stores]
+            Registry
+            subgraph CompExt[Component Extensions]
+                NativeLibs[Native 3rd Party Libraries]
+            end
+            SessionMgr[Session Manager]
+            TelemetryMgr[Telemetry Manager]
+            ConfigMgr[Configuration Manager]
+            ResourceMgr[Resource Manager]
+        end
+    end
+    CLIConfig --- API
+    CmdExt --- API
+    App --- API
+    API --- RT
+```
+
+### Domain Model Overview
+
+**Status: Planned**
+
+A simplified view of the main domain concepts and their relationships.
+
+```mermaid
+classDiagram
+    RuntimeAPI <-- CLI : consumes
+    RuntimeAPI <-- ThirdPartyApp : consumes
+    RuntimeAPI <-- RuntimeImplementation : exposes
+    RuntimeImplementation --> RuntimeContext
+    CLI --> PluginManager
+    CLI --> SubCommand
+    PluginManager --> "0..*" Plugin
+    Plugin --> "0..*" FlowscripterCommand
+    Plugin --> "0..*" FlowscripterComponent
+    FlowscripterComponent --> "0..1" NativeCode : implemented in
+    NativeCode --> "0..1" JavascriptBinding : exposed via
+    FlowscripterComponent <|-- Operator
+    FlowscripterComponent <|-- PayloadType
+    FlowscripterComponent <|-- DataModel
+    FlowscripterComponent <|-- AttributeKey
+    RuntimeContext --> Registry
+    SessionManager --> "0..*" Session : manages
+    Session --> "0..*" Graph : contains
+    Session --> "0..*" DataEntries : contains
+    Graph --> "0..*" Operator : contains
+    Graph --> "0..*" Link : contains
+    Graph --> "0..*" SubGraph : contains
+    Operator --> "0..*" Pin
+    Pin <|-- InputPin
+    Pin <|-- OutputPin
+    Link --> "1..*" Mode
+    Link <|-- InProcessLink
+    Link <|-- UDPLink
+    Link <|-- SharedMemoryLink
+    Mode <|-- NonBlockingBackPressure
+    Mode <|-- Queue
+    Queue <|-- LeakyQueue
+    Queue <|-- BlockingQueue
+    Link --> "0..*" Item : transfers
+    Item --> "0..1" Payload
+    Item --> "0..*" Attribute
+    Attribute --> AttributeKey : key
+    DataEntries --> DataModel : defined by
+    DatastoreManager --> "0..*" Datastore : manages
+    Datastore --> "0..*" DataEntries : stores
+    GraphEngine --> "0..*" Graph : executes
+    GraphEngine --> ResourceManager : requests resources
+    ResourceManager --> "0..*" Resource : manages
+    Resource <|-- Memory
+    Resource <|-- IO
+    Resource <|-- Compute
+    TelemetryManager --> "0..*" TelemetryListener : manages
+    TelemetryListener --> "0..*" TelemetrySource : listens to
+    TelemetrySource --> "0..*" TelemetryData : generates
+```
