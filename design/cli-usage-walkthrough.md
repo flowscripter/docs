@@ -1,8 +1,12 @@
 ### Install
 
+**Status: Planned**
+
 Download and unzip from [https://flowscripter.org/download](https://flowscripter.org/download)
 
 ### First Run
+
+**Status: Planned**
 
 From a terminal:
 
@@ -24,6 +28,8 @@ scope=@flowscripter # scope to use for Flowscripter plugin packages
 ```
 
 ### Basic Help
+
+**Status: Planned**
 
 `flowscripter --help` or `flowscripter`
 
@@ -65,6 +71,8 @@ Installed components:
 
 #### Basic Commands
 
+**Status: Planned**
+
 `flowscripter version`
 
 which returns:
@@ -99,6 +107,8 @@ The following plugins are not compatible with the current version and will need 
 ```
 
 #### Installing a Command
+
+**Status: Planned**
 
 `flowscripter install mxf-metadata-extract-command`
 
@@ -138,7 +148,6 @@ Installed components:
 The `mxf-metadata-extract-command` package is a Flowscripter command plugin and makes use of the `bmx` and `mxf-model` 
 component plugins.
 
-
 Running:
 
 `flowscripter help mxf-metadata-extract`
@@ -160,6 +169,8 @@ Arguments:
 ```
 
 #### REPL Example
+
+**Status: Planned**
 
 `flowscripter repl`
 
@@ -202,11 +213,15 @@ Installed components:
 
 #### Script Example
 
+**Status: Planned**
+
 A pre-existing script can be executed using:
 
 `flowscripter script -file=script.js`
 
 #### SDK Support
+
+**Status: Planned**
 
 To develop command and component plugins, you need to install the Flowscripter SDK:
 
@@ -236,6 +251,8 @@ Installed commands:
 
 ##### npm and 3rd Party Packages
 
+**Status: Planned**
+
 To build a plugin you will need `npm` installed.
 
 When you scaffold a new project it will include a `package.json` file and suitable build scripts to build
@@ -243,3 +260,74 @@ When you scaffold a new project it will include a `package.json` file and suitab
 
 If you configure `npm` (using `prefix`) and the Flowscripter `settings.yaml` file to use 
 the same modules prefix, you can use `npm` to manage 3rd party packages you wish to import within your plugin.
+
+#### Module and Plugin Framework
+
+**Status: Planned**
+
+```mermaid
+flowchart TB
+    subgraph WS[workstation]
+        npm
+        subgraph LMF[local module folder]
+            Pkg[3rd party package]
+            ESM6[bundled ES6 module]
+        end
+        subgraph Nexe[nexe executable]
+            subgraph Node[node process]
+                CJS[CJS module loader]
+                ESML[ESM module loader]
+                REPL[repl]
+                subgraph CliLib[flowscripter cli and lib]
+                    Plugin[flowscripter plugin]
+                    PM[flowscripter plugin manager]
+                    PluginsCmd[plugins command]
+                end
+            end
+        end
+    end
+    subgraph NPMJS[npmjs.com]
+        Remote[bundled ES6 module]
+    end
+    subgraph DL[flowscripter.org/download]
+        Exe[nexe executable]
+    end
+    npm -->|install| Pkg
+    CJS -->|load| Pkg
+    ESML -->|load| ESM6
+    REPL -->|dynamic import| CJS
+    REPL -->|importPlugin| PluginsCmd
+    PM -->|discovers| Plugin
+    PluginsCmd -->|importPlugin| ESML
+    Plugin -->|import| ESML
+    PluginsCmd -->|install| Remote
+    Remote -.->|HTTP GET| ESM6
+    ESM6 -.->|implements| Plugin
+    Exe -.->|download and execute| Nexe
+
+    subgraph SDKWS[workstation: plugin development]
+        SDK[flowscripter cli with sdk command]
+        PSrc[flowscripter plugin source: JS, C, Rust]
+        Tools1[compiler etc.]
+        Pkgs1[3rd party packages]
+        npm1[npm]
+        SDK -->|scaffold| PSrc
+        PSrc -->|import| Pkgs1
+        Tools1 -->|build| PSrc
+        npm1 -->|install| Pkgs1
+    end
+    PSrc -.->|deploy| Remote
+
+    subgraph CLIWS[workstation: cli build]
+        CSrc[flowscripter cli, lib, source: JS, C, Rust]
+        Tools2[compiler etc.]
+        Pkgs2[3rd party packages]
+        npm2[npm]
+        Tools2 -->|build| CSrc
+        CSrc -->|import| Pkgs2
+        npm2 -->|install| Pkgs2
+    end
+    CSrc -.->|deploy| Exe
+```
+
+The flowscripter plugin and npm need to use the same local module folder when using npm and the flowscripter REPL or SDK.

@@ -1,5 +1,7 @@
 #### Basic Graph Concepts
 
+**Status: Planned**
+
 ```
 var payloadType1 = new BinaryDataChunkPayloadType();
 var payloadType2 = new Mpeg2TransportStreamPacketPayloadType();
@@ -37,6 +39,8 @@ session.destroy();
 
 #### Chains
 
+**Status: Planned**
+
 Automatic links with default negotiated payload types:
 
 ```
@@ -61,6 +65,8 @@ session.destroy();
 
 #### Multiple Graphs Per Session
 
+**Status: Planned**
+
 Multiple graphs can be processed at the same time:
  
 ```
@@ -80,6 +86,8 @@ session.destroy();
 
 #### Hierarchical Graphs
 
+**Status: Planned**
+
 An incomplete chain used to construct a sub-graph (unconnected pins will be exposed on sub-graph):
 
 ```
@@ -98,6 +106,8 @@ session.destroy();
 A `SubGraph` also exposes an API to explicitly expose pins and operator parameters and properties.
 
 #### Parallel Execution 
+
+**Status: Planned**
 
 Automatic and transparent parallel execution of paths by the framework can currently only be performed 
 on single operators and for operators with only a single input and single output.
@@ -121,7 +131,6 @@ var parentGraph = new Graph(new Chain(new DualOutputSource(), new Parallel(new S
 Alternatively, you could use an `aggregate()` operator before the `scatter()` operator and a `split()` operator after the `scatter()` operator 
 (and the same for before and after the `gather()` operator):
 
-
 ```
 var parentGraph = new Graph(new Chain(new DualOutputSource(), new Aggregate(), new Parallel(new Scatter(), new Split(), { new X(), new Y() }, new Aggregate(), new Gather(), 3), new Split(), new DualInputSink()));
 ```
@@ -139,6 +148,8 @@ var graph = new Graph(new Chain(new Parallel(new Source(), new Gather(), 3), new
 ```
 
 #### Use Case Example 1
+
+**Status: Planned**
 
 To achieve this functionality:
 
@@ -166,6 +177,8 @@ session.resumeAndWaitForCompletion(graph);
 ```
 
 #### Use Case Example 2
+
+**Status: Planned**
 
 To achieve this functionality:
 
